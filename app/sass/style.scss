@@ -8,7 +8,9 @@ $line: #ffffff;
 $footer-text: #ffffff;
 $button-background: #000000;
 $input-background: #F5F4FF;
-
+$play-button: #ffffff;
+$play-icon: #8C0BFF;
+$placeholder: #222222;
 
 @mixin flex-column {
     display: flex;
@@ -23,6 +25,16 @@ $input-background: #F5F4FF;
 @mixin image-size {
     width: 100%;
     height: 900px;
+}
+
+@mixin placeholder {
+    color: $placeholder;
+    opacity: 0.5;
+    padding-left: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 28px;
 }
 
 body {
@@ -63,6 +75,8 @@ header.top-menu {
     }
     .burger-menu {
         padding-right: 123px;
+        @include flex-column;
+        align-items: flex-end;
     }
 
     .burger-menu__item {
@@ -97,6 +111,11 @@ header.top-menu {
     line-height: 28px;
     color: $gray-description-text;
     opacity: 0.7;
+    padding-top: 30px;
+    padding-bottom: 70px;
+}
+.loader {
+    padding-top: 200px;
 }
 
 .introduction__text {
@@ -108,16 +127,54 @@ header.top-menu {
 .introduction__image {
     @include image-size;
     background-image: url('../img/introduction.png');
+    position: relative;
+    .introduction__video {
+        @include flex-row;
+        align-items: flex-end;
+        .preview {
+            background-image: url('../img/video.png');
+            background-repeat: no-repeat;
+            width: 400px;
+            height: 310px;
+            @include flex-column;
+            align-items: center;
+            justify-content: center;
+        }
+        position: absolute;
+        top: 310px;
+        left: -125px;
+        width: 400px;
+        height: 364px;
+    }
+}
+
+.play-button {
+    width: 65px;
+    height: 65px;
+    background: $play-button;
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+}
+.play-button__icon {
+    width: 0; 
+    height: 0; 
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 16px solid $play-icon;
+    margin-left: 5px;
 }
 
 .wrapper {
     @include flex-row;
-    padding: 126px;
+    padding: 126px 126px 0 126px;
 }
 
 .about__image {
-    @include image-size;
+    min-width: 475px;
+    height: 564px;
     background-image: url('../img/about.png');
+    background-repeat: no-repeat;
 }
 
 .about__text {
@@ -133,6 +190,73 @@ header.top-menu {
 
     .header {
         width: 70%;
+    }
+}
+.slider {
+    max-width: 90%;
+    position: relative;
+    height: 500px;
+    padding-top: 50px;
+    margin-bottom: 15px;
+    @include flex-row;
+    
+    .video_preview {
+        object-fit: cover;
+        width: 825px;
+        height: 500px;
+        @include flex-row;
+        justify-content: center;
+        align-items: center;
+        &:nth-child(2n){
+            background: url('../img/video1.png');
+        }
+        &:nth-child(2n + 1){
+            background: url('../img/video2.png');            
+        }
+    }
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        top: 50%;
+        width: auto;
+        margin-top: -22px;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+    }
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    .video_preview {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1.5s;
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+    @-webkit-keyframes fade {
+        from {
+            opacity: .4
+        }
+        to {
+            opacity: 1
+        }
+    }
+    @keyframes fade {
+        from {
+            opacity: .4
+        }
+        to {
+            opacity: 1
+        }
     }
 }
 
@@ -278,6 +402,15 @@ header.top-menu {
                 background: $input-background;
                 border: none;
                 margin: 0 15px;
+                &::-webkit-input-placeholder {
+                    @include placeholder;
+                }
+                &::-moz-placeholder {
+                    @include placeholder;
+                }
+                &:-ms-input-placeholder {
+                    @include placeholder;
+                }
             }
         }
     }
