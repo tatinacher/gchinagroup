@@ -1,2 +1,0 @@
-# gchinagroup
-Simple landing
